@@ -11,10 +11,11 @@ contract Marketplace is ERC721Full {
     mapping(uint256 => Product) public products;
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
-    // mapping(uint256 => string) private _tokenURIs;
+    mapping(uint256 => string) private _tokenURIs;
 
     struct Product {
         uint256 id;
+        string country;
         string name;
         uint256 price;
         address payable owner;
@@ -23,12 +24,12 @@ contract Marketplace is ERC721Full {
         bool approvedFromOwnerToBuyer;
         bool sended;
         address approver;
-        // bool transfered;
-        // string tokenURI;
+        string tokenURI;
     }
 
     event ProductCreated(
         uint256 id,
+        string country,
         string name,
         uint256 price,
         address owner,
@@ -36,13 +37,13 @@ contract Marketplace is ERC721Full {
         address buyer,
         bool approvedFromOwnerToBuyer,
         bool sended,
-        address approver
-        // bool transfered,
-        // string tokenURI
+        address approver,
+        string tokenURI
     );
 
     event ProductPurchased(
         uint256 id,
+        string country,
         string name,
         uint256 price,
         address payable owner,
@@ -50,9 +51,8 @@ contract Marketplace is ERC721Full {
         address buyer,
         bool approvedFromOwnerToBuyer,
         bool sended,
-        address approver
-        // bool transfered,
-        // string tokenURI
+        address approver,
+        string tokenURI
     );
 
     event Approval(
@@ -72,16 +72,21 @@ contract Marketplace is ERC721Full {
 
     //商品登録
     function createProduct(
+        string memory _country,
         string memory _name,
         uint256 _price,
-        address _approver // returns (uint256)
+        address _approver,
+        string memory _tokenURI
     ) public {
         require(bytes(_name).length > 0);
         require(_price > 0);
 
         productCount++; //トークンIDと同義
+        _tokenURIs[productCount] = _tokenURI;
+        // _setTokenURI(productCount, _tokenURI);
         products[productCount] = Product(
             productCount,
+            _country,
             _name,
             _price,
             msg.sender,
@@ -89,17 +94,16 @@ contract Marketplace is ERC721Full {
             msg.sender,
             false,
             false,
-            _approver
-            // false
-            // _tokenURI
+            _approver,
+            _tokenURIs[productCount]
         );
-        // uint256 id = productCount;
 
         super._mint(msg.sender, productCount); //商品登録した人にトークンを付与
 
         emit Mint(msg.sender, productCount);
         emit ProductCreated(
             productCount,
+            _country,
             _name,
             _price,
             msg.sender,
@@ -107,21 +111,20 @@ contract Marketplace is ERC721Full {
             msg.sender, //購入者 = 出品した人（仮）
             false,
             false,
-            _approver
-            // false
+            _approver,
+            _tokenURIs[productCount]
         );
-        // return id;
     }
 
     //画像登録URI設定
-    // function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
-    //     require(_exists(tokenId));
-    //     _tokenURIs[tokenId] = _tokenURI;
-    // }
+    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
+        require(_exists(tokenId));
+        _tokenURIs[tokenId] = _tokenURI;
+    }
 
     //商品閲覧
-    // function productreturn(uint256 id) public view returns (Product memory) {
-    //     return products[id];
+    // function productreturn(address _owner) public view returns (Product memory) {
+    //     return productsOfOwner[_owner];
     // }
 
     //商品購入意思表示
@@ -134,14 +137,17 @@ contract Marketplace is ERC721Full {
         // require(!_product.purchased);
         require(_product.owner != msg.sender);
 
+        _product.country;
         _product.buyer = msg.sender;
         _product.purchased = true; //購入済みに更新
         _product.approver;
+        _product.tokenURI;
         products[_id] = _product; //更新
 
         // address(_seller).transfer(msg.value); //コントラクトアドレスへデポジット？？？
         emit ProductPurchased(
             productCount,
+            _product.country,
             _product.name,
             _product.price,
             _seller,
@@ -149,8 +155,8 @@ contract Marketplace is ERC721Full {
             msg.sender, //購入した人
             false, //non approved
             false, //non sended
-            _product.approver
-            // false
+            _product.approver,
+            _product.tokenURI
         );
     }
 
@@ -169,12 +175,15 @@ contract Marketplace is ERC721Full {
         _tokenApprovals[_id] = _to;
         emit Approval(_owner, _to, _id);
 
+        _product.country;
         _product.approvedFromOwnerToBuyer = true;
         _product.approver;
+        _product.tokenURI;
         products[_id] = _product;
 
         emit ProductCreated(
             productCount,
+            _product.country,
             _product.name,
             _product.price,
             _owner,
@@ -182,8 +191,8 @@ contract Marketplace is ERC721Full {
             _tokenApprovals[_id], //購入者 = 承認された人
             true, // approved
             false, //non sended
-            _product.approver
-            // false //non transfered
+            _product.approver,
+            _product.tokenURI
         );
     }
 
@@ -204,14 +213,17 @@ contract Marketplace is ERC721Full {
         // require(getApproved(_id) == msg.sender); //※※これが何故か引っかかる
 
         // 購入済みかどうか
+        _product.country;
         _product.owner = msg.sender;
         _product.sended = true;
-        products[_id] = _product;
         _product.approver;
+        _product.tokenURI;
+        products[_id] = _product;
         address(_seller).transfer(msg.value);
 
         emit ProductPurchased(
             productCount,
+            _product.country,
             _product.name,
             _product.price,
             _product.owner,
@@ -219,36 +231,8 @@ contract Marketplace is ERC721Full {
             msg.sender, //購入者 = 送金した人
             true, // approved
             true, //sended
-            _product.approver
-            // false
+            _product.approver,
+            _product.tokenURI
         );
-        // safeTransferFrom(_seller,msg.sender,_id);
     }
-
-    //トークンの移転　safeTransferfrom　from 買い手, to 売り手　require( == true)
-    // function safeTransferFrom(address _from, address _to, uint256 _id) public {
-    //     Product storage _product = products[_id];
-
-    //     require(_product.purchased); //購入済みかどうか（trueなら所有権を移転）
-    //     require(_product.sended);
-
-    //     require(_isApprovedOrOwner(_msgSender(), _id));
-    //     _safeTransferFrom(_from, _to, _id, "");
-
-    //     _product.owner = msg.sender;
-    //     _product.transfered = true;
-    //     products[_id] = _product;
-
-    //     emit ProductPurchased(
-    //         productCount,
-    //         _product.name,
-    //         _product.price,
-    //         _product.owner,
-    //         true, //purchased
-    //         msg.sender, //購入者 = 送金した人
-    //         true, // approved
-    //         true, //sended
-    //         true
-    //     );
-    // }
 }

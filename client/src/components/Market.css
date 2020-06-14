@@ -1,0 +1,275 @@
+.main {
+  padding: 0 10px;
+}
+
+/* 各商品 */
+@media screen and (max-width: 375px) {
+  .Product {
+    float: left;
+    width: 410px;
+    height: 490px;
+    padding: 10px;
+    border: 0.1px solid #eeeeee;
+    /* border-radius: 1px; */
+  }
+}
+@media screen and (min-width: 376px) {
+  .Product {
+    float: left;
+    width: 250px;
+    height: 450px;
+    padding: 10px;
+    border: 0.1px solid #eeeeee;
+    /* border-radius: 1px; */
+  }
+}
+
+.Product:hover {
+  background-color: #eeeeee;
+}
+
+.ProductName,
+.ProductPrice,
+.Country,
+.Owner,
+.Approver {
+  text-align: left;
+  font-family: Times New Roman;
+  /* font-weight: 40; */
+}
+
+.Owner,
+.Approver {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 購入、承認、送金ボタン */
+.btn_square_pop_purchase,
+.btn_square_pop_approve,
+.btn_square_pop_send {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: Times New Roman;
+  margin: 0 2px;
+  color: #fff;
+  background: #008080; /*背景色*/
+  border-bottom: solid 1px #005500; /*少し濃い目の色に*/
+  border-radius: 4px; /*角の丸み*/
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+}
+
+.btn_square_pop_purchase:hover,
+.btn_square_pop_send:hover,
+.btn_square_pop_approve:hover {
+  background-color: #005500;
+  border-bottom: solid 2px #000000; /*少し濃い目の色に*/
+}
+
+.btn_square_pop_purchase:before,
+.btn_square_pop_approve:before,
+.btn_square_pop_send:before {
+  content: ' ';
+  position: absolute;
+  bottom: -5px;
+  left: -1px;
+  width: 0;
+  height: 0;
+  border-width: 0 6px 6px 0px;
+  /* border-style: solid; */
+  border-color: transparent;
+  /* border-bottom-color: #fff; */
+}
+
+.btn_square_pop_purchase:after,
+.btn_square_pop_approve:after,
+.btn_square_pop_send:after {
+  position: absolute;
+  top: -1px;
+  right: -5px;
+  width: 0;
+  height: 0;
+  border-width: 0px 6px 6px 0px;
+  border-style: solid;
+  border-color: #fff;
+  border-bottom-color: transparent;
+}
+
+.btn_square_pop_purchase:active,
+.btn_square_pop_approve:active,
+.btn_square_pop_send:active {
+  /* border-bottom: solid 2px #696969; */
+  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); */
+  border: none;
+  -webkit-transform: translate(1px, 1px);
+  transform: translate(1px, 1px);
+}
+
+.btn_square_pop_purchase:active:after,
+.btn_square_pop_approve:active:after,
+.btn_square_pop_send:active:after,
+.btn_square_pop_purchase:active:before,
+.btn_square_pop_approve:active:before,
+.btn_square_pop_senda:active:before {
+  content: none; /*ボタンを押すと線が消える*/
+}
+
+/* 証明書確認ボタン */
+@media screen and (max-width: 375px) {
+  .btn_square_pop_certificate {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Times New Roman;
+    margin: 0 2px;
+    color: #fff;
+    background: #808080; /*背景色*/
+    border-bottom: solid 1px #000000; /*少し濃い目の色に*/
+    border-radius: 4px; /*角の丸み*/
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 2px 2px rgba(0, 0, 0, 0.19);
+  }
+}
+@media screen and (min-width: 376px) {
+  .btn_square_pop_certificate {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: Times New Roman;
+    margin: 0 2px;
+    color: #fff;
+    background: #808080; /*背景色*/
+    border-bottom: solid 1px #000000; /*少し濃い目の色に*/
+    border-radius: 4px; /*角の丸み*/
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 2px 2px rgba(0, 0, 0, 0.19);
+  }
+}
+
+.btn_square_pop_certificate:hover {
+  background-color: #696969;
+  border-bottom: solid 2px #000000; /*少し濃い目の色に*/
+}
+
+.btn_square_pop_certificate:before {
+  content: ' ';
+  position: absolute;
+  bottom: -5px;
+  left: -1px;
+  width: 0;
+  height: 0;
+  border-width: 0 6px 6px 0px;
+  /* border-style: solid; */
+  border-color: transparent;
+  /* border-bottom-color: #fff; */
+}
+
+.btn_square_pop_certificate:after {
+  position: absolute;
+  top: -1px;
+  right: -5px;
+  width: 0;
+  height: 0;
+  border-width: 0px 6px 6px 0px;
+  border-style: solid;
+  border-color: #fff;
+  border-bottom-color: transparent;
+}
+
+.btn_square_pop_certificate:active {
+  /* border-bottom: solid 2px #696969; */
+  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); */
+  border: none;
+  -webkit-transform: translate(1px, 1px);
+  transform: translate(1px, 1px);
+}
+
+.btn_square_pop_certificate:active:after,
+.btn_square_pop_certificate:active:before {
+  content: none; /*ボタンを押すと線が消える*/
+}
+
+h2 {
+  text-align: center;
+}
+
+@media screen and (max-width: 375px) {
+  .certificate_info {
+    border-bottom: 1px solid #c0c0c0;
+    font-family: Times New Roman;
+  }
+  p.certificate_info_address {
+    border-bottom: 1px solid #c0c0c0;
+    font-family: Times New Roman;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+@media screen and (min-width: 376px) {
+  .certificate_info_paper {
+    border-bottom: 1px solid #c0c0c0;
+    font-family: Times New Roman;
+  }
+}
+
+.certificate_info_text {
+  font-weight: 100;
+  font-family: Times New Roman;
+}
+
+.modal-container {
+  max-width: 100px;
+}
+
+@media screen and (max-width: 375px) {
+  .micromodal_certificate_child {
+    width: 240px;
+    padding: 1.5em 1.5em;
+    margin: em 1em;
+    font-weight: bold;
+    border: double 3px #000000;
+  }
+}
+@media screen and (min-width: 376px) {
+  .micromodal_certificate_child {
+    width: 600px;
+    padding: 1.5em 1.5em;
+    margin: em 1em;
+    font-weight: bold;
+    border: double 3px #000000;
+  }
+}
+
+.handle_close {
+  font-weight: 100;
+  font-family: Times New Roman;
+  color: #fff;
+  background: #008080; /*背景色*/
+  border-bottom: solid 1px #005500; /*少し濃い目の色に*/
+  border-radius: 4px; /*角の丸み*/
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+}
+
+.handle_close:active {
+  border-bottom: solid 2px #008080;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.handle_close:hover {
+  background-color: #00aa00;
+  border-bottom: solid 2px #005500; /*少し濃い目の色に*/
+}
+
+/* ※MicroModalのmax-width、モジュールで直接500→1100に変更 */

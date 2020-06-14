@@ -1,0 +1,7 @@
+.address {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: Times New Roman;
+  /* color: darkgray;s */
+}

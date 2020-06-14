@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import Marketplace from './abi/Marketplace.json';
 import Web3 from 'web3';
-import Address from './components/Address';
-import Main from './components/Main';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './components/Home';
+import Exhibit from './components/Exhibit';
+import Market from './components/Market';
+import Footer from './components/Footer';
+import ipfs from './ipfs';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+// import IconButton from '@material-ui/core/IconButton';
+// import MenuIcon from '@material-ui/icons/Menu';
 
 import './App.css';
 
 class App extends Component {
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
   }
@@ -40,7 +50,7 @@ class App extends Component {
         networkData.address //コントラクトアドレス
       );
       this.setState({ marketplace });
-      console.log(accounts[0]);
+      // console.log(accounts[0]);
       // console.log(window.web3.givenProvider.selectedAddress);
 
       //productCountメソッド(または変数など)を呼び出す。
@@ -66,22 +76,54 @@ class App extends Component {
       account: '',
       productCount: 0,
       products: [],
-      loading: true
+      loading: true,
+      buffer: null,
+      ipfsHash: [],
+      open: false,
+      anchorEl: null
     };
     //関数をフォームで呼び出す
     this.createProduct = this.createProduct.bind(this);
     this.purchaseProduct = this.purchaseProduct.bind(this);
     this.approve = this.approve.bind(this);
     this.sendMoney = this.sendMoney.bind(this);
-    // this.safeTransferFrom = this.safeTransferFrom.bind(this);
-    // this._setTokenURI = this._setTokenURI.bind(this);
+    this.captureFile = this.captureFile.bind(this);
+    this.fileUpload = this.fileUpload.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  // 画像アップロード
+  captureFile(e) {
+    e.preventDefault();
+    const file = e.target.files[0]; //ファイルの一個目
+    const reader = new window.FileReader(); //ファイルを読み込む
+    reader.readAsArrayBuffer(file); //ファイルをメモリ上に確保されているバッファ（バイナリデータ（コンピュータが読めるようにしたデータ）を格納する領域）配列として読み込む
+    reader.onloadend = () => {
+      //読み込みが終了した時に発生
+      this.setState({ buffer: Buffer(reader.result) }); //読み込んだデータをバッファとして、stateのbufferに格納
+      console.log('buffer', this.state.buffer);
+    };
+  }
+
+  // 画像登録
+  fileUpload(e) {
+    e.preventDefault();
+    ipfs.files.add(this.state.buffer, (error, result) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      this.setState({ ipfsHash: result[0].hash });
+      console.log('ipfsHash : ', this.state.ipfsHash);
+    });
   }
 
   // 商品登録
-  createProduct(name, price, approver) {
+  createProduct(country, name, price, approver, tokenURI) {
     this.setState({ loading: true });
     this.state.marketplace.methods
-      .createProduct(name, price, approver)
+      .createProduct(country, name, price, approver, tokenURI)
       .send({ from: this.state.account }) //sendはトランザクションを生成 ＝ ユーザのgas支払いを要求
       .once('receipt', receipt => {
         this.setState({ loading: false });
@@ -111,7 +153,6 @@ class App extends Component {
   }
 
   // 送金
-
   sendMoney(id, price) {
     this.setState({ loading: true });
     this.state.marketplace.methods
@@ -122,54 +163,100 @@ class App extends Component {
       });
   }
 
-  // 商品の所有権移転
-  // safeTransferFrom(owner, buyer, name) {
-  //   this.setState({ loading: true });
-  //   this.state.marketplace.methods
-  //     .safeTransferFrom(owner, buyer, name)
-  //     .send({ from: this.state.account }) //sendはトランザクションを生成 ＝ ユーザのgas支払いを要求
-  //     .once('receipt', receipt => {
-  //       this.setState({ loading: false });
-  //     });
-  // }
+  handleClick = e => {
+    this.setState({
+      open: true,
+      anchorEl: e.currentTarget
+    });
+    // this.setState({ anchorEl: e.currentTarget });
+    // console.log(e.currentTarget);
+    console.log(this.state.open);
+    console.log(this.state.anchorEl);
+    // console.log('handleClick');
+  };
 
-  // 画像URI登録
-  // _setTokenURI(name, value) {
-  //   this.setState({ loading: true });
-  //   this.state.marketplace.methods
-  //     ._setTokenURI(name, value)
-  //     .send({ from: this.state.account })
-  //     .once('receipt', receipt => {
-  //       this.setState({ loading: false });
-  //     });
-  // }
+  handleClose = () => {
+    this.setState({ open: false, anchorEl: null });
+    // this.setState({ anchorEl: null });
+    // console.log('handleClose');
+  };
 
   render() {
     return (
       <div className="App">
-        <Address account={this.state.account} />
-        <main>
-          {this.state.loading ? (
-            <div>
-              <p>Loading...</p>
+        <BrowserRouter>
+          <div className="menu">
+            <div className="humbagar_btn">
+              <p></p>
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={this.handleClick}
+                className="main_menu_btn"
+              >
+                <span></span>
+              </Button>
             </div>
-          ) : (
-            <Main
-              products={this.state.products}
-              createProduct={this.createProduct}
-              purchaseProduct={this.purchaseProduct}
-              approve={this.approve}
-              sendMoney={this.sendMoney}
-              // safeTransferFrom={this.safeTransferFrom}
-              // _setTokenURI={this._setTokenURI}
+            <Header account={this.state.account} />
+            <div>
+              <Menu
+                id="simple-menu"
+                anchorEl={this.state.anchorEl}
+                keepMounted
+                open={Boolean(this.state.anchorEl)}
+                onClose={this.handleClose}
+              >
+                <MenuItem onClick={this.handleClose}>
+                  <Link to="/" className="menu_tab_name">
+                    Home
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={this.handleClose}>
+                  <Link to="/market" className="menu_tab_name">
+                    Market
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={this.handleClose}>
+                  <Link to="/exhibit" className="menu_tab_name">
+                    Exhibit
+                  </Link>
+                </MenuItem>
+              </Menu>
+            </div>
+          </div>
+
+          <Switch>
+            <Route exact path="/" render={() => <Home />} />
+            <Route
+              path="/market"
+              render={() => (
+                <Market
+                  products={this.state.products}
+                  purchaseProduct={this.purchaseProduct}
+                  approve={this.approve}
+                  sendMoney={this.sendMoney}
+                  handleToCertificatePage={this.handleToCertificatePage}
+                />
+              )}
             />
-          )}
-        </main>
+            <Route
+              path="/exhibit"
+              render={() => (
+                <Exhibit
+                  ipfsHash={this.state.ipfsHash}
+                  createProduct={this.createProduct}
+                  captureFile={this.captureFile}
+                  fileUpload={this.fileUpload}
+                  account={this.state.account}
+                />
+              )}
+            />
+          </Switch>
+          <Footer className="footer" />
+        </BrowserRouter>
       </div>
     );
   }
-
-  confirm() {}
 }
 
 export default App;

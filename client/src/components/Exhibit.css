@@ -1,0 +1,256 @@
+@media screen and (max-width: 375px) {
+  .exhibit {
+    padding-top: 25px;
+    padding-bottom: 100px;
+    padding-left: 30px;
+    float: left;
+    width: 250px;
+    height: 450px;
+    padding: 10px, 100px, 10opx, 100px;
+  }
+}
+@media screen and (min-width: 376px) {
+  .exhibit {
+    padding-top: 50px;
+    float: left;
+    width: 250px;
+    height: 450px;
+    padding: 10px, 100px, 10opx, 100px;
+  }
+}
+
+.image_register {
+  margin: 15px 0;
+  width: 250px;
+  height: 25px;
+}
+
+.image_button {
+  float: left;
+}
+
+.virtual:hover:active,
+.file_upload:active {
+  border-bottom: solid 2px #999;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.virtual:hover,
+.file_upload:hover {
+  background-color: #cccccc;
+  border-bottom: solid 2px #bbbbbb; /*少し濃い目の色に*/
+}
+
+/* ファイルアップロードボタン */
+.virtual,
+.file_upload {
+  content: 'Choose Image';
+  display: inline-block;
+  border: 0 solid #999;
+  outline: none;
+  font-size: 15px;
+  font-family: Times New Roman;
+  background-color: #faf9f9;
+  padding: 0.3em 0.5em;
+  letter-spacing: 0.5px;
+  border-radius: 5px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.file_upload {
+  padding-left: 10px;
+}
+
+/* 画像インプット（非表示） */
+.file_choose {
+  display: none;
+}
+
+/* 項目入力欄 */
+.exhibit_input {
+  margin-left: 50px;
+  width: 250px;
+  height: 700px;
+}
+
+.exhibit_form {
+  width: 250px;
+}
+
+/* 購入ボタン */
+
+.title_register {
+  font-family: Times New Roman;
+  font-weight: 40;
+  letter-spacing: 3px;
+}
+
+.exhibit_button {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: Times New Roman;
+  margin: 0 2px;
+  color: #fff;
+  background: #008080; /*背景色*/
+  border-bottom: solid 1px #005500; /*少し濃い目の色に*/
+  border-radius: 4px; /*角の丸み*/
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+  padding: 5px 10px;
+}
+
+.exhibit_button:hover {
+  background-color: #00663f;
+  border-bottom: solid 2px #005500; /*少し濃い目の色に*/
+}
+
+.exhibit_button:before {
+  content: ' ';
+  position: absolute;
+  bottom: -5px;
+  left: -1px;
+  width: 0;
+  height: 0;
+  border-width: 0 6px 6px 0px;
+  /* border-style: solid; */
+  border-color: transparent;
+  /* border-bottom-color: #fff; */
+}
+
+.exhibit_button:after {
+  position: absolute;
+  top: -1px;
+  right: -5px;
+  width: 0;
+  height: 0;
+  border-width: 0px 6px 6px 0px;
+  border-style: solid;
+  border-color: #fff;
+  border-bottom-color: transparent;
+}
+
+.exhibit_button:active {
+  /* border-bottom: solid 2px #696969; */
+  /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); */
+  border: none;
+  -webkit-transform: translate(1px, 1px);
+  transform: translate(1px, 1px);
+}
+
+.exhibit_button:active:after,
+.exhibit_button:active:before {
+  content: none; /*ボタンを押すと線が消える*/
+}
+
+.input,
+.input_countryName {
+  margin: 15px 0;
+  font-family: Times New Roman;
+  font-size: 1em;
+  width: 250px;
+  height: 25px;
+  border: solid 0px;
+  border-bottom: 1px solid #cccccc;
+  letter-spacing: 2px;
+}
+
+.input_countryName {
+  text-align: center;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.test02 {
+  display: none;
+}
+
+/* デモ */
+@media screen and (max-width: 375px) {
+  .certificate_demo {
+    width: 380px;
+    font-size: 18px;
+    font-family: Times New Roman;
+    height: 450px;
+    object-fit: cover;
+    text-align: center;
+    /* margin: 0 250px; */
+    border-radius: 5px;
+  }
+}
+@media screen and (min-width: 376px) {
+  .certificate_demo {
+    width: 625px;
+    font-size: 18px;
+    font-family: Times New Roman;
+    height: 450px;
+    /* background-image: url(../image/certification.jpg);
+  background-color: rgba(255, 255, 255, 0.5); */
+    object-fit: cover;
+    text-align: center;
+    margin: 0 250px;
+    border-radius: 5px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .certificate_demo_title {
+    font-family: Times New Roman;
+    font-weight: 40;
+    letter-spacing: 3px;
+    padding-bottom: 50px;
+  }
+}
+@media screen and (min-width: 376px) {
+  .certificate_demo_title {
+    font-family: Times New Roman;
+    font-weight: 40;
+    letter-spacing: 3px;
+    padding-bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .certificate_info_context {
+    text-align: left;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+@media screen and (min-width: 376px) {
+  .certificate_info_context {
+    text-align: left;
+    margin: 0 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  certificate_info {
+    border-bottom: 1px solid #cccccc;
+    overflow: hidden;
+  }
+  p.certificate_info {
+    max-width: 300px;
+    border-bottom: 1px solid #cccccc;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (min-width: 376px) {
+  .certificate_info {
+    border-bottom: 1px solid #cccccc;
+    overflow: hidden;
+  }
+  p.certificate_info {
+    border-bottom: 1px solid #cccccc;
+    overflow: hidden;
+  }
+}

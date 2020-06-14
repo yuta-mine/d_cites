@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import './Address.css';
 
 class Address extends Component {
   render() {
     return (
       <div>
-        <span>アカウントアドレス：{this.props.account}</span>;
+        <span className="address">Your Address : {this.props.account}</span>
       </div>
     );
   }

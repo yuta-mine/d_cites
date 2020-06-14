@@ -5,9 +5,13 @@
   "dependencies": {
     "await": "^0.2.6",
     "axios": "^0.19.2",
+    "ipfs-api": "^26.1.2",
+    "micromodal": "^0.4.6",
     "openzeppelin-solidity": "^2.5.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
+    "react-micro-modal": "^1.7.3",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "web3": "1.2.2"

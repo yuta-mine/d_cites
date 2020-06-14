@@ -1,0 +1,41 @@
+ul {
+  list-style: none;
+}
+
+/* ホーム画像 */
+@media screen and (max-width: 375px) {
+  .image_list {
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 414px; */
+    margin: 0 -40px;
+  }
+}
+
+@media screen and (min-width: 376px) {
+  .image_list {
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 100%; */
+    margin: 0 -40px;
+  }
+}
+
+/* ホーム画像 */
+@media screen and (max-width: 375px) {
+  .image_list img {
+    width: 440px;
+    height: 205px;
+    object-fit: cover;
+  }
+}
+
+@media screen and (min-width: 376px) {
+  .image_list img {
+    width: 700px;
+    height: 350px;
+    object-fit: cover;
+  }
+}
