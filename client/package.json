@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "await": "^0.2.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "ipfs-api": "^26.1.2",
     "micromodal": "^0.4.6",
     "openzeppelin-solidity": "^2.5.0",
